@@ -59,6 +59,7 @@ footer { margin-top:40px; font-size:0.9em; color:#555; }
 
 <script>
 const LEADS_API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // Replace with your Apps Script URL
+let conversation = [];
 
 async function submitLead(email,message=''){
   try{
@@ -91,18 +92,19 @@ const sendBtn = document.getElementById('sendBtn');
 async function sendMessage(){
   const msg = userInput.value.trim();
   if(!msg) return;
-  appendMessage('You',msg);
+  appendMessage('You', msg);
   userInput.value='';
 
   try{
     const res = await fetch('/api/chat',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ message: msg })
+      body: JSON.stringify({ message: msg, conversation })
     });
     const data = await res.json();
     appendMessage('Sarah',data.reply);
-    await submitLead('',msg);
+    conversation = data.conversation; // preserve context
+    await submitLead('', msg); // capture chat as lead
   }catch(err){
     appendMessage('Sarah','Sorry, something went wrong.');
     console.error(err);
