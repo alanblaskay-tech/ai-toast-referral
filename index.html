@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Toast Referral</title>
+<title>AI Toast Referral - Chat with Sarah</title>
 <style>
 body { font-family: Arial, sans-serif; margin:0; padding:0; text-align:center; background:#f7f7f7; }
 header { background:#ff6f00; color:white; padding:40px 20px; }
@@ -24,7 +24,7 @@ footer { margin-top:40px; font-size:0.9em; color:#555; }
 <body>
 <header>
 <h1>AI Toast Referral</h1>
-<p>Help restaurants save time and get rewarded!</p>
+<p>Chat with Sarah, your AI marketing assistant!</p>
 </header>
 
 <main>
@@ -52,7 +52,7 @@ footer { margin-top:40px; font-size:0.9em; color:#555; }
 <div id="chatbot">
 <div id="chatMessages"></div>
 <div id="chatInput">
-<input type="text" id="userMessage" placeholder="Ask me anything...">
+<input type="text" id="userMessage" placeholder="Ask Sarah anything...">
 <button id="sendBtn">Send</button>
 </div>
 </div>
@@ -101,10 +101,10 @@ async function sendMessage(){
       body: JSON.stringify({ message: msg })
     });
     const data = await res.json();
-    appendMessage('AI Bot',data.reply);
+    appendMessage('Sarah',data.reply);
     await submitLead('',msg);
   }catch(err){
-    appendMessage('AI Bot','Sorry, something went wrong.');
+    appendMessage('Sarah','Sorry, something went wrong.');
     console.error(err);
   }
 }
