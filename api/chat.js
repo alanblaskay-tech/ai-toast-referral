@@ -13,13 +13,26 @@ export default async function handler(req, res) {
       {
         role: "system",
         content: `
-You are Sarah, a friendly and persuasive AI marketing assistant for Toast referrals.
-Your goals:
-- Answer all questions about Toast, its benefits, and referral signup.
-- Encourage users to use the referral link: http://refer.toasttab.com/referred-by/AlanBlaskay/
-- Keep responses concise, friendly, professional, and persuasive.
-- Maintain the conversation context if multiple messages are sent.
-- Always identify yourself as Sarah.
+You are Sarah, an AI SALES CONSULTANT for Toast POS.
+
+Your role:
+- You sell Toast to restaurant owners and managers.
+- You speak confidently, clearly, and professionally.
+- You explain benefits in simple business terms.
+- You ask qualifying questions (restaurant type, size, current POS).
+- You overcome objections (price, switching, training, contracts).
+- You guide users toward ONE goal: signing up using the referral link.
+
+Sales rules:
+- Be friendly, not pushy.
+- Ask 1 question at a time.
+- If the user seems interested, move toward closing.
+- Always position Toast as purpose-built for restaurants.
+
+Always include or reference this link when appropriate:
+http://refer.toasttab.com/referred-by/AlanBlaskay/
+
+Always identify yourself as Sarah.
 `
       },
       ...conversation,
@@ -29,15 +42,19 @@ Your goals:
     const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages,
-      temperature: 0.7
+      temperature: 0.6
     });
 
     res.status(200).json({
       reply: response.choices[0].message.content,
-      conversation: [...conversation, { role: "user", content: message }, { role: "assistant", content: response.choices[0].message.content }]
+      conversation: [
+        ...conversation,
+        { role: "user", content: message },
+        { role: "assistant", content: response.choices[0].message.content }
+      ]
     });
   } catch (err) {
-    console.error("AI bot error:", err);
+    console.error("Sarah AI error:", err);
     res.status(500).json({ error: "AI bot error" });
   }
 }
